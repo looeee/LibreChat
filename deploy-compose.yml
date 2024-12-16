@@ -67,25 +67,25 @@ services:
     env_file:
       - .env
     environment:
+      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
       #- MEILI_HOST=${MEILI_HOST}
       #- MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
-      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
     volumes:
       - ./meili_data_v1.7:/meili_data
 
   vectordb:
     image: ankane/pgvector:latest
     environment:
-    - POSTGRES_DB: ${POSTGRES_DB}
-    - POSTGRES_USER: ${POSTGRES_USER}
-    - POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    - POSTGRES_DB = ${POSTGRES_DB}
+    - POSTGRES_USER = ${POSTGRES_USER}
+    - POSTGRES_PASSWORD = ${POSTGRES_PASSWORD}
     restart: always
     volumes:
       - pgdata2:/var/lib/postgresql/data
 
   rag_api:
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
-    environment:
+    #environment:
       # - DB_HOST=${DB_HOST}
       # - RAG_PORT=${RAG_PORT:-8000}
     restart: always
