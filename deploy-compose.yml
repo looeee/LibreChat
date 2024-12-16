@@ -8,22 +8,22 @@ services:
     image: ghcr.io/danny-avila/librechat-dev-api:latest
     container_name: LibreChat-API
     ports:
-      - 3080:3080
+      - ${PORT}:${PORT}
     depends_on:
       - mongodb
       - rag_api
     restart: always
     extra_hosts:
     - "host.docker.internal:host-gateway"
-    #env_file:
-    #  - .env
-    #environment:
-    #  - HOST=0.0.0.0
-    #   - NODE_ENV=production
-    #  - MONGO_URI=mongodb://mongodb:27017/LibreChat
-    # - MEILI_HOST=http://meilisearch:7700
-    # - RAG_PORT=${RAG_PORT:-8000}
-    # - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
+    env_file:
+      - .env
+    environment:
+      - HOST=${HOST}
+      - NODE_ENV=${NODE_ENV}
+      - MONGO_URI=${MONGO_URI}
+      - MEILI_HOST=${MEILI_HOST}
+      - RAG_PORT=${RAG_PORT:-8000}
+      - RAG_API_URL=${RAG_API_URL}
     volumes:
       - ./librechat.yaml:/app/librechat.yaml 
       - ./images:/app/client/public/images
@@ -59,34 +59,34 @@ services:
     restart: always
     # ports: # Uncomment this to access meilisearch from outside docker
     #   - 7700:7700 # if exposing these ports, make sure your master key is not the default value
-    #env_file:
-    #  - .env
-    #environment:
-    #  - MEILI_HOST=http://meilisearch:7700
-    #  - MEILI_NO_ANALYTICS=true
+    env_file:
+      - .env
+    environment:
+      - MEILI_HOST=${MEILI_HOST}
+      - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
     volumes:
       - ./meili_data_v1.7:/meili_data
 
   vectordb:
     image: ankane/pgvector:latest
-    #environment:
-    #  POSTGRES_DB: mydatabase
-    #  POSTGRES_USER: myuser
-    #  POSTGRES_PASSWORD: mypassword
+    environment:
+    - POSTGRES_DB: ${POSTGRES_DB}
+    - POSTGRES_USER: ${POSTGRES_USER}
+    - POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: always
     volumes:
       - pgdata2:/var/lib/postgresql/data
 
   rag_api:
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
-    #environment:
-    #  - DB_HOST=vectordb
-    #  - RAG_PORT=${RAG_PORT:-8000}
+    environment:
+      - DB_HOST=${DB_HOST}
+      - RAG_PORT=${RAG_PORT:-8000}
     restart: always
     depends_on:
       - vectordb
-    #env_file:
-    #  - .env
+    env_file:
+      - .env
 
 volumes:
   pgdata2:
