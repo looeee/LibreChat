@@ -18,12 +18,17 @@ services:
     env_file:
       - .env
     environment:
-      - HOST=${HOST}
+      - CREDS_KEY = ${CREDS_KEY}
+      - CREDS_IV = ${CREDS_IV}
+      - JWT_SECRET = ${JWT_SECRET}
+      - JWT_REFRESH_SECRET = ${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
+      #- HOST=${HOST}
       - NODE_ENV=${NODE_ENV}
-      - MONGO_URI=${MONGO_URI}
-      - MEILI_HOST=${MEILI_HOST}
-      - RAG_PORT=${RAG_PORT:-8000}
-      - RAG_API_URL=${RAG_API_URL}
+      #- MONGO_URI=${MONGO_URI}
+      #- MEILI_HOST=${MEILI_HOST}
+      #- RAG_PORT=${RAG_PORT:-8000}
+      #- RAG_API_URL=${RAG_API_URL}
     volumes:
       - ./librechat.yaml:/app/librechat.yaml 
       - ./images:/app/client/public/images
@@ -62,8 +67,9 @@ services:
     env_file:
       - .env
     environment:
-      - MEILI_HOST=${MEILI_HOST}
-      - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
+      #- MEILI_HOST=${MEILI_HOST}
+      #- MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
+      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
     volumes:
       - ./meili_data_v1.7:/meili_data
 
@@ -80,8 +86,8 @@ services:
   rag_api:
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
     environment:
-      - DB_HOST=${DB_HOST}
-      - RAG_PORT=${RAG_PORT:-8000}
+      # - DB_HOST=${DB_HOST}
+      # - RAG_PORT=${RAG_PORT:-8000}
     restart: always
     depends_on:
       - vectordb
