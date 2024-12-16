@@ -35,6 +35,7 @@ services:
       - ./logs:/app/api/logs
     networks:
       - proxy-network
+      - app-network
       
   # client:
   #   image: nginx:1.27.0-alpine
@@ -57,6 +58,8 @@ services:
     volumes:
       - ./data-node:/data/db
     command: mongod --noauth
+    networks:
+      - app-network
 
   meilisearch:
     container_name: chat-meilisearch
@@ -72,6 +75,8 @@ services:
       #- MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
     volumes:
       - ./meili_data_v1.7:/meili_data
+    networks:
+      - app-network
 
   vectordb:
     image: ankane/pgvector:latest
@@ -82,7 +87,9 @@ services:
     restart: always
     volumes:
       - pgdata2:/var/lib/postgresql/data
-
+    networks:
+      - app-network
+      
   rag_api:
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
     environment:
@@ -94,10 +101,14 @@ services:
       - vectordb
     env_file:
       - .env
+    networks:
+      - app-network
 
 volumes:
   pgdata2:
 
 networks:
+  app-network:
+    name: librechat-network
   proxy-network:
     external: true
