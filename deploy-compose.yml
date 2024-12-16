@@ -18,11 +18,11 @@ services:
     env_file:
       - .env
     environment:
-      - CREDS_KEY = ${CREDS_KEY}
-      - CREDS_IV = ${CREDS_IV}
-      - JWT_SECRET = ${JWT_SECRET}
-      - JWT_REFRESH_SECRET = ${JWT_REFRESH_SECRET}
-      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       #- HOST=${HOST}
       - NODE_ENV=${NODE_ENV}
       #- MONGO_URI=${MONGO_URI}
@@ -67,7 +67,7 @@ services:
     env_file:
       - .env
     environment:
-      - MEILI_MASTER_KEY = ${MEILI_MASTER_KEY}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       #- MEILI_HOST=${MEILI_HOST}
       #- MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
     volumes:
@@ -76,9 +76,9 @@ services:
   vectordb:
     image: ankane/pgvector:latest
     environment:
-    - POSTGRES_DB = ${POSTGRES_DB}
-    - POSTGRES_USER = ${POSTGRES_USER}
-    - POSTGRES_PASSWORD = ${POSTGRES_PASSWORD}
+    - POSTGRES_DB=${POSTGRES_DB}
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: always
     volumes:
       - pgdata2:/var/lib/postgresql/data
