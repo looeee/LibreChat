@@ -1,3 +1,7 @@
+## !!!!!!! This file can't be picked up when pulling the repo using portainer. 
+## Or at least, I couldn't get it to work. 
+## Instead, map it to a file on the server in deploy-compose.yml
+
 # For more information, see the Configuration Guide:
 # https://www.librechat.ai/docs/configuration/librechat_yaml
 
