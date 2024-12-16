@@ -8,7 +8,7 @@ services:
     image: ghcr.io/danny-avila/librechat-dev-api:latest
     container_name: LibreChat-API
     ports:
-      - ${PORT}:${PORT}
+      - 3080:3080
     depends_on:
       - mongodb
       - rag_api
