@@ -59,6 +59,14 @@ services:
     volumes:
       - ./data-node:/data/db
     command: mongod --noauth
+    env_file:
+      - .env
+    environment:
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     networks:
       - app-network
 
@@ -71,6 +79,10 @@ services:
     env_file:
       - .env
     environment:
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       #- MEILI_HOST=${MEILI_HOST}
       #- MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS}
@@ -81,10 +93,17 @@ services:
 
   vectordb:
     image: ankane/pgvector:latest
+    env_file:
+      - .env
     environment:
-    - POSTGRES_DB=${POSTGRES_DB}
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: always
     volumes:
       - pgdata2:/var/lib/postgresql/data
@@ -93,7 +112,14 @@ services:
       
   rag_api:
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
+    env_file:
+      - .env
     environment:
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
