@@ -66,6 +66,7 @@ registration:
   socialLogins: ['github', 'google', 'discord', 'openid', 'facebook']
   allowedDomains:
    - "thomsbakery.cafe"
+   - "gmail.com"
 
 # speech:
 #   tts:
