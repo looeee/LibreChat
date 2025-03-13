@@ -63,10 +63,9 @@ interface:
     
 # Example Registration Object Structure (optional)
 registration:
-  socialLogins: ['github', 'google', 'discord', 'openid', 'facebook']
-#  allowedDomains:
-#   - "thomsbakery.cafe"
-#   - "ethospower.org"
+  # socialLogins: ['github', 'google', 'discord', 'openid', 'facebook']
+  allowedDomains:
+   - "thomsbakery.cafe"
 
 # speech:
 #   tts:
